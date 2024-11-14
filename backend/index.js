@@ -1,6 +1,10 @@
 import express from "express";
 import cors from 'cors'
 import bodyParser from "body-parser";
+import axios from "axios";
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app = express()
 const port = 6969
@@ -32,6 +36,28 @@ app.post('/text',(req,res)=>{
     console.log("Sending Message...");
     
 })
+
+
+/*-------------------------------BMI CAlC------------------------------------*/
+const axios = require('axios');
+const options = {
+    method: 'GET',
+    url: 'https://body-mass-index-bmi-calculator.p.rapidapi.com/metric',
+    params: {
+      weight: '150',    //height in cm 
+      height: '1.83'    //height 
+    },
+    headers: {
+      'x-rapidapi-key': process.env.RAPIDAPI_KEY,
+      'x-rapidapi-host': process.env.RAPIDAPI_HOST
+    }
+  };
+try {
+	const response = await axios.request(options);
+	console.log(response.data);
+} catch (error) {
+	console.error(error);
+}
 
 app.listen(port,()=>{
     console.log(`Server is running on  -http://localhost:${port}`);
